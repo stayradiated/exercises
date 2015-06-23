@@ -1,3 +1,5 @@
+[![Gitter][gitter-image]][gitter-url]
+
 These are some basic (and advanced) coding challenges
 
 Here's the basic workflow:
@@ -6,9 +8,9 @@ Here's the basic workflow:
 [~]         $ git clone https://github.com/kolodny/exercises
 [~]         $ cd exercises
 [exercises] $ npm install
-[exercises] $ cd throttle
-[throttle]  $ vi index.js
-[throttle]  $ npm test
+[exercises] $ cd debounce
+[debounce]  $ vi index.js
+[debounce]  $ npm test
 ```
 This uses a basic TDD approach so take a look at the test.js file in each directory to see what needs to be implemented, write an index.js as the solution file
 
@@ -20,3 +22,6 @@ Pull requests welcome, please follow the basic workflow:
 2. Copy a package.json from a sibling folder
 3. Make a test.js file
 4. Optionally provide a README.md
+
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-url]: https://gitter.im/kolodny/exercises
