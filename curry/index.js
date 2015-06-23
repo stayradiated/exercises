@@ -1,20 +1,20 @@
+'use strict';
 
 module.exports = function (fn) {
   return function() {
     var len = fn.length;
-    var finalArgs = [];
 
-    var cb = function () {
-      var args = Array.prototype.slice.call(arguments);
-      finalArgs = finalArgs.concat(args);
+    var cb = function (lastArgs) {
+      return function () {
+        var args = lastArgs.concat(Array.prototype.slice.call(arguments));
+        if (args.length >= len) {
+          return fn.apply(this, args);
+        } else {
+          return cb(args);
+        }
+      };
+    };
 
-      if (finalArgs.length >= len) {
-        return fn.apply(null, finalArgs);
-      } else {
-        return cb;
-      }
-    }
-
-    return cb.apply(null, arguments);
+    return cb([]).apply(this, arguments);
   };
-}
+};
