@@ -1,25 +1,31 @@
+'use strict';
 
 module.exports = function (fn, delay) {
-  var timeout = null;
+  var canRun = true;
+  var runOnEnd = false;
+
   var args = null;
   var ctx = null;
 
   var cb = function () {
-    fn.apply(ctx, args);
-    ctx = null;
-    args = null;
+    if (canRun === false) {
+      runOnEnd = true;
+      ctx = this;
+      args = arguments;
+      return;
+    }
+
+    fn.apply(this, arguments);
+    canRun = false;
+
+    setTimeout(function () {
+      canRun = true;
+      if (runOnEnd === true) {
+        runOnEnd = false;
+        cb.apply(ctx, args);
+      }
+    }, delay);
   };
 
-  return function () {
-    if (timeout != null) {
-      clearTimeout(timeout);
-    }
-
-    if (args == null) {
-      args = Array.prototype.slice.call(arguments);
-      ctx = this;
-    }
-
-    timeout = setTimeout(cb, delay);
-  }
+  return cb;
 };
